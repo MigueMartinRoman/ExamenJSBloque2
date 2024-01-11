@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>The Asteroid Project</title>
+
+    <link rel="stylesheet" href="assets/css/nasa.css">
+</head>
+
+<body>
+    <header>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1200px-NASA_logo.svg.png"
+            alt="logo nasa" width="1200" height="993">
+    </header>
+    <main>
+        <aside>
+            <select id="dates" multiple></select>
+            <button id="cerca">Cerca asteroides</button>
+            <p>Prem Ctrl o Cmd per seleccionar vàries dates a la vegada</p>
+        </aside>
+        <section>
+            <div>
+                <h2>Resultat</h2>
+            </div>
+            <table id="listaAsteroides"></table>
+            <div id="taula"></div>
+            <div id="paginacio">
+                <button id="anterior">Anterior</button>
+                <button id="seguent">Següent</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+</body>
+
+<script>
+
+    fetch("https://theteacher.codiblau.com/public/exercicis/nasa?date=2023-10-10")
+        .then(function (asteroides){
+            return asteroides.json();
+        })
+        .then(function (respuesta){
+            document.querySelector("#listaAsteroides").innerHTML += '<tr><th>Nombre</th><th>Es peligroso?</th><th>Diámetro</th></tr>';
+
+            for (let i=0; i<respuesta.length; i++){
+                console.log(respuesta[i])
+                if (respuesta[i].asteroid_esperillos == true) {
+                    respuesta[i].asteroid_esperillos = "Si";
+                } else {
+                    respuesta[i].asteroid_esperillos = "No";
+                }
+                document.querySelector("#listaAsteroides").innerHTML += `<tr><td>${respuesta[i].asteroid_name}<td>${respuesta[i].asteroid_esperillos}<td>${respuesta[i].asteroid_diameter_mm}</td></td></td></tr>`;
+            }
+        })
+
+
+
+</script>
+
+</html>
